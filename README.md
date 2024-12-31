@@ -19,7 +19,7 @@ This project is focused on training a Named Entity Recognition (NER) model using
 - `output/`: Contains the trained model.
 
 ## Project workflow
-![Workflow](images/image.png)
+![Workflow](NER_Model/images/image.png)
 
 ## Data Source
 
