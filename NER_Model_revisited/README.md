@@ -41,7 +41,7 @@ The raw data for this project is scraped using [ParseHub](https://www.parsehub.c
 3. **Annotate Data**:
    Run the `annotate.py` script to annotate the raw data.
    ```sh
-   python scripts/annotate.py
+   python scripts/annotate.pys
    ```
 
 4. **Convert Data**:
