@@ -1,0 +1,40 @@
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101"
+  namespace="http://www.flowable.org/dmn"
+  name="DetermineDiscount">
+
+
+  <decision id="decisionTable" name="decision table">
+      <decisionTable id="decisionTable_e3cb0630-6a72-4c5f-a544-debf9c94863e" hitPolicy="FIRST">
+        <input label="userVariable">
+          <inputExpression id="inputExpression_633eaecc-5f59-40e6-b450-1e5d0a6cbfb9" typeRef="string">
+            <text>userVariable</text>
+          </inputExpression>
+        </input>
+        <output id="outputExpression_bf2081ab-5162-49a3-a3f1-ab0dd69df08f" label="decisionTableOutputVariable" name="decisionTableOutputVariable" typeRef="string"></output>
+        <rule>
+          <inputEntry id="inputEntry_633eaecc-5f59-40e6-b450-1e5d0a6cbfb9_1">
+            <text><![CDATA[== "yes"]]></text>
+          </inputEntry>
+          <outputEntry id="outputEntry_bf2081ab-5162-49a3-a3f1-ab0dd69df08f_1">
+            <text><![CDATA["succes"]]></text>
+          </outputEntry>
+        </rule>
+        <rule>
+          <inputEntry id="inputEntry_633eaecc-5f59-40e6-b450-1e5d0a6cbfb9_2">
+            <text><![CDATA[== "no"]]></text>
+          </inputEntry>
+          <outputEntry id="outputEntry_bf2081ab-5162-49a3-a3f1-ab0dd69df08f_2">
+            <text><![CDATA["failure"]]></text>
+          </outputEntry>
+        </rule>
+        <rule>
+          <inputEntry id="inputEntry_633eaecc-5f59-40e6-b450-1e5d0a6cbfb9_3">
+            <text><![CDATA[-]]></text>
+          </inputEntry>
+          <outputEntry id="outputEntry_bf2081ab-5162-49a3-a3f1-ab0dd69df08f_3">
+            <text><![CDATA["others"]]></text>
+          </outputEntry>
+        </rule>
+      </decisionTable>
+  </decision>
+</definitions>

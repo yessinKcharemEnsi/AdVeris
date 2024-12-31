@@ -1,0 +1,28 @@
+{
+    "entities": [
+        {
+            "text": "quatre belles chambres",
+            "label": "NBRE_CHAMBRE"
+        },
+        {
+            "text": "trois salles de bain",
+            "label": "NBRE_BATHROOM"
+        },
+        {
+            "text": "-",
+            "label": "NBRE_WC"
+        },
+        {
+            "text": "premières chambres",
+            "label": "NBRE_CHAMBRE"
+        },
+        {
+            "text": "quatrième chambre",
+            "label": "NBRE_CHAMBRE"
+        },
+        {
+            "text": "troisième salle de bain",
+            "label": "NBRE_BATHROOM"
+        }
+    ]
+}

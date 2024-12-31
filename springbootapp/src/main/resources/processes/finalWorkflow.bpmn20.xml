@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:design="http://flowable.org/design" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://flowable.org/test" design:palette="flowable-process-palette">
+  <process id="finalWorkflow" name="finalWorkflow" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
+    <extensionElements>
+      <design:stencilid><![CDATA[BPMNDiagram]]></design:stencilid>
+      <design:language><![CDATA[English]]></design:language>
+      <design:creationdate><![CDATA[2021-08-09T13:50:44.474Z]]></design:creationdate>
+      <design:modificationdate><![CDATA[2021-08-30T13:00:29.702Z]]></design:modificationdate>
+    </extensionElements>
+    <startEvent id="startevent1" name="new ad detected" flowable:initiator="initiator" >
+      <extensionElements>
+        <flowable:work-form-field-validation><![CDATA[false]]></flowable:work-form-field-validation>
+        <design:stencilid><![CDATA[StartNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </startEvent>
+    <serviceTask id="extractMetaData" name="extract metadata" flowable:class="futureproof.ExtractMetaData">
+      <extensionElements>
+        <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="sequenceFlow1" name="sequenceFlow1" sourceRef="startevent1" targetRef="extractMetaData">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <serviceTask id="DetectSimilarities" name="detect similarities" flowable:class="futureproof.DetectSimilarities">
+      <extensionElements>
+        <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="sequenceFlow2" name="sequenceFlow2" sourceRef="extractMetaData" targetRef="DetectSimilarities">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <exclusiveGateway id="exclusive_Databased_Gateway1" default="sequenceFlow5">
+      <extensionElements>
+        <design:stencilid><![CDATA[Exclusive_Databased_Gateway]]></design:stencilid>
+      </extensionElements>
+    </exclusiveGateway>
+    <sequenceFlow id="sequenceFlow3" name="sequenceFlow3" sourceRef="DetectSimilarities" targetRef="exclusive_Databased_Gateway1">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <serviceTask id="MegreEntries" name="merge entries" flowable:class="futureproof.MergeEntries">
+      <extensionElements>
+        <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="sequenceFlow4" name="sequenceFlow4" sourceRef="exclusive_Databased_Gateway1" targetRef="MegreEntries">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${similaritiesDetected}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="exclusive_Databased_Gateway2">
+      <extensionElements>
+        <design:stencilid><![CDATA[Exclusive_Databased_Gateway]]></design:stencilid>
+      </extensionElements>
+    </exclusiveGateway>
+    <sequenceFlow id="sequenceFlow6" name="sequenceFlow6" sourceRef="MegreEntries" targetRef="exclusive_Databased_Gateway2">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="sequenceFlow5" name="sequenceFlow5" sourceRef="exclusive_Databased_Gateway1" targetRef="exclusive_Databased_Gateway2">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <exclusiveGateway id="exclusive_Databased_Gateway3" default="sequenceFlow17">
+      <extensionElements>
+        <design:stencilid><![CDATA[Exclusive_Databased_Gateway]]></design:stencilid>
+      </extensionElements>
+    </exclusiveGateway>
+    <sequenceFlow id="sequenceFlow16" name="sequenceFlow16" sourceRef="exclusive_Databased_Gateway3" targetRef="UpdateDB">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${similaritiesDetected}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sequenceFlow17" name="sequenceFlow17" sourceRef="exclusive_Databased_Gateway3" targetRef="endEvent1">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <serviceTask id="AddToDB" name="add to DB" flowable:class="futureproof.AddToDB">
+      <extensionElements>
+        <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="sequenceFlow19" name="sequenceFlow19" sourceRef="AddToDB" targetRef="endEvent3">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <serviceTask id="UpdateDB" name="update DB" flowable:class="futureproof.UpdateDB">
+      <extensionElements>
+        <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </serviceTask>
+    <endEvent id="endEvent1" name="endEvent1">
+      <extensionElements>
+        <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </endEvent>
+    <endEvent id="endEvent3" name="endEvent3">
+      <extensionElements>
+        <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </endEvent>
+    <endEvent id="endEvent2" name="endEvent2">
+      <extensionElements>
+        <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </endEvent>
+    <sequenceFlow id="sequenceFlow20" name="sequenceFlow20" sourceRef="UpdateDB" targetRef="endEvent2">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="sequenceFlow15" name="sequenceFlow15" sourceRef="exclusive_Databased_Gateway3" targetRef="AddToDB">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!similaritiesDetected}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sequenceFlow13" sourceRef="exclusive_Databased_Gateway2" targetRef="exclusive_Databased_Gateway3">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_myWorkflow">
+    <bpmndi:BPMNPlane bpmnElement="myWorkflow" id="BPMNPlane_myWorkflow">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="30.0" y="261.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="extractMetaData" id="BPMNShape_extractMetaData">
+        <omgdc:Bounds height="80.0" width="100.0" x="180.0" y="236.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="DetectSimilarities" id="BPMNShape_DetectSimilarities">
+        <omgdc:Bounds height="80.0" width="100.0" x="450.0" y="236.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusive_Databased_Gateway1" id="BPMNShape_exclusive_Databased_Gateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="705.0" y="256.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="MegreEntries" id="BPMNShape_MegreEntries">
+        <omgdc:Bounds height="80.0" width="100.0" x="870.0" y="236.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusive_Databased_Gateway2" id="BPMNShape_exclusive_Databased_Gateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="1095.0" y="256.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusive_Databased_Gateway3" id="BPMNShape_exclusive_Databased_Gateway3">
+        <omgdc:Bounds height="40.0" width="40.0" x="2280.0" y="256.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="AddToDB" id="BPMNShape_AddToDB">
+        <omgdc:Bounds height="80.0" width="100.0" x="2415.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="UpdateDB" id="BPMNShape_UpdateDB">
+        <omgdc:Bounds height="80.0" width="100.0" x="2415.0" y="236.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endEvent1" id="BPMNShape_endEvent1">
+        <omgdc:Bounds height="28.0" width="28.0" x="2640.0" y="465.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endEvent3" id="BPMNShape_endEvent3">
+        <omgdc:Bounds height="28.0" width="28.0" x="2640.0" y="41.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endEvent2" id="BPMNShape_endEvent2">
+        <omgdc:Bounds height="28.0" width="28.0" x="2640.0" y="262.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow5" id="BPMNEdge_sequenceFlow5">
+        <omgdi:waypoint x="725.5" y="295.44417281672816"></omgdi:waypoint>
+        <omgdi:waypoint x="725.5" y="439.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1115.0" y="439.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1115.0" y="295.9060926949049"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow19" id="BPMNEdge_sequenceFlow19">
+        <omgdi:waypoint x="2514.9500000000003" y="55.0"></omgdi:waypoint>
+        <omgdi:waypoint x="2640.0" y="55.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow6" id="BPMNEdge_sequenceFlow6">
+        <omgdi:waypoint x="969.9499999999999" y="276.12774936061385"></omgdi:waypoint>
+        <omgdi:waypoint x="1095.448717948718" y="276.44871794871796"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow3" id="BPMNEdge_sequenceFlow3">
+        <omgdi:waypoint x="549.95" y="276.1107538802661"></omgdi:waypoint>
+        <omgdi:waypoint x="705.4555555555555" y="276.4555555555556"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow17" id="BPMNEdge_sequenceFlow17">
+        <omgdi:waypoint x="2300.5" y="295.44532329713724"></omgdi:waypoint>
+        <omgdi:waypoint x="2300.5" y="479.0"></omgdi:waypoint>
+        <omgdi:waypoint x="2640.0" y="479.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow4" id="BPMNEdge_sequenceFlow4">
+        <omgdi:waypoint x="744.4939335394023" y="276.451030927835"></omgdi:waypoint>
+        <omgdi:waypoint x="869.9999999999744" y="276.1284061696658"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow16" id="BPMNEdge_sequenceFlow16">
+        <omgdi:waypoint x="2319.5019652650694" y="276.4420731707317"></omgdi:waypoint>
+        <omgdi:waypoint x="2415.0" y="276.15182370820673"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow1" id="BPMNEdge_sequenceFlow1">
+        <omgdi:waypoint x="59.949999465934766" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="179.9999999999298" y="276.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow15" id="BPMNEdge_sequenceFlow15">
+        <omgdi:waypoint x="2300.5" y="256.5"></omgdi:waypoint>
+        <omgdi:waypoint x="2300.5" y="55.0"></omgdi:waypoint>
+        <omgdi:waypoint x="2415.0" y="55.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow2" id="BPMNEdge_sequenceFlow2">
+        <omgdi:waypoint x="279.95000000000005" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="449.9999999998744" y="276.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow13" id="BPMNEdge_sequenceFlow13">
+        <omgdi:waypoint x="1134.4572016720913" y="276.49197635135135"></omgdi:waypoint>
+        <omgdi:waypoint x="2280.008438818512" y="276.008417721519"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow20" id="BPMNEdge_sequenceFlow20">
+        <omgdi:waypoint x="2514.94999999986" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="2640.0" y="276.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

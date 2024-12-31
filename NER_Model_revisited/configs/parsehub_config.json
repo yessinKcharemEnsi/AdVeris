@@ -1,0 +1,13 @@
+{
+    "api_key": "tH_JPiY0Y3fL",
+    "project_token": "t1r9GvFQQTer",
+    "start_template": "main_template",
+    "send_email": true,
+    "output_dir": "raw_data",
+    "train_file": "train.txt",
+    "validate_file": "validate.txt",
+    "train_split": 0.8,
+    "validate_split": 0.2,
+    "poll_interval": 2
+  }
+  
