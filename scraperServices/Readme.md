@@ -6,10 +6,10 @@ This project is a Spring Boot application that integrates with ActiveMQ for mess
 
 ## Features
 
-- \*\*Fetch Data\*\*: Uses the `Scraper` class to fetch data from an external API.
-- \*\*Process Data\*\*: Parses JSON data and converts it into `Ad` objects.
-- \*\*Publish Messages\*\*: Publishes `Ad` objects to an ActiveMQ queue.
-- \*\*Configuration\*\*: Uses properties from the `application.properties` file for configuration.
+- **Fetch Data**: Uses the `Scraper` class to fetch data from an external API.
+- **Process Data**: Parses JSON data and converts it into `Ad` objects.
+- **Publish Messages**: Publishes `Ad` objects to an ActiveMQ queue.
+- **Configuration**: Uses properties from the `application.properties` file for configuration.
 
 ## Prerequisites
 
@@ -19,16 +19,16 @@ This project is a Spring Boot application that integrates with ActiveMQ for mess
 
 ## Setup
 
-1. \*\*Clone the repository\*\*:
+1. **Clone the repository**:
    \```sh
    git clone <repository-url>
    cd <repository-directory>
    \```
 
-2. \*\*Configure ActiveMQ\*\*:
+2. **Configure ActiveMQ**:
    Ensure ActiveMQ is running and accessible.
 
-3. \*\*Update `application.properties`\*\*:
+3. **Update `application.properties`**:
    Configure the necessary properties in `src/main/resources/application.properties`:
    \```properties
    spring.activemq.broker-url=tcp://localhost:61616
@@ -44,12 +44,12 @@ This project is a Spring Boot application that integrates with ActiveMQ for mess
 
 ## Build and Run
 
-1. \*\*Build the project\*\*:
+1. **Build the project**:
    \```sh
    mvn clean install
    \```
 
-2. \*\*Run the application\*\*:
+2. **Run the application**:
    \```sh
    mvn spring-boot:run
    \```
@@ -64,9 +64,9 @@ The `Scraper` class fetches data from an external API using an HTTP GET request.
 
 The `PublishController` provides endpoints to publish messages to the ActiveMQ queue.
 
-- \*\*Endpoint\*\*: `/api/publish`
-- \*\*Method\*\*: POST
-- \*\*Parameters\*\*:
+- **Endpoint**: `/api/publish`
+- **Method**: POST
+- **Parameters**:
   - `message` (required): The message to be published.
   - `queueName` (optional): The name of the queue.
 
@@ -75,9 +75,9 @@ Example:
 curl -X POST "http://localhost:8083/api/publish?message=TestMessage"
 \```
 
-- \*\*Endpoint\*\*: `/api/publish/ad`
-- \*\*Method\*\*: POST
-- \*\*Parameters\*\*:
+- **Endpoint**: `/api/publish/ad`
+- **Method**: POST
+- **Parameters**:
   - `ad` (required): The Ad object to be published.
   - `queueName` (optional): The name of the queue.
 
