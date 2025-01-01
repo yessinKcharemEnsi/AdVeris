@@ -1,46 +1,67 @@
 package com.bridgingcode.springbootactivemqdemo.publisher.controller;
 
+import com.bridgingcode.springbootactivemqdemo.model.Ad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * Controller for publishing messages to an ActiveMQ queue.
+ * REST Controller for publishing messages to a JMS queue.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/publish")
 public class PublishController {
 
     private final JmsTemplate jmsTemplate;
-    private final String queueName;
+
+    @Value("${jms.queue.name}")
+    private String defaultQueueName;
 
     @Autowired
-    public PublishController(JmsTemplate jmsTemplate, @Value("${activemq.queue.name}") String queueName) {
+    public PublishController(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
-        this.queueName = queueName;
     }
 
+    /**
+     * Publish a simple string message to a JMS queue.
+     *
+     * @param message the message to be published
+     * @param queueName the name of the queue (optional)
+     * @return ResponseEntity with status
+     */
+    @PostMapping
+    public ResponseEntity<String> publishMessage(
+            @RequestParam String message,
+            @RequestParam(required = false) String queueName) {
+        try {
+            String targetQueue = (queueName != null && !queueName.isEmpty()) ? queueName : defaultQueueName;
+            jmsTemplate.convertAndSend(targetQueue, message);
+            return ResponseEntity.ok("Message sent to queue: " + targetQueue);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
 
     /**
-     * Endpoint to publish a message to the "testQ" queue.
+     * Publish an Ad object to a JMS queue.
      *
-     * @return ResponseEntity indicating the status of the operation
+     * @param ad the Ad object to be published
+     * @param queueName the name of the queue (optional)
+     * @return ResponseEntity with status
      */
-    @PostMapping("/publishMessage")
-    public ResponseEntity<String> publishMessage() {
+    @PostMapping("/ad")
+    public ResponseEntity<String> publishAd(
+            @RequestBody Ad ad,
+            @RequestParam(required = false) String queueName) {
         try {
-            // Send a message to the "testQ" queue
-            jmsTemplate.convertAndSend(queueName, "hello");            System.out.println("Message sent to queue: testQ");
-            return new ResponseEntity<>("Message sent successfully.", HttpStatus.OK);
+            String targetQueue = (queueName != null && !queueName.isEmpty()) ? queueName : defaultQueueName;
+            jmsTemplate.convertAndSend(targetQueue, ad);
+            return ResponseEntity.ok("Ad object sent to queue: " + targetQueue);
         } catch (Exception e) {
-            // Log and return an error response
-            e.printStackTrace();
-            return new ResponseEntity<>("Failed to send message: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
     }
 }

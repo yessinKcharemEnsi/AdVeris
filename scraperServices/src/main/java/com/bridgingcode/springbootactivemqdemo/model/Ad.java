@@ -2,88 +2,73 @@ package com.bridgingcode.springbootactivemqdemo.model;
 
 import java.io.Serializable;
 
-
 public class Ad implements Serializable {
-    private static final long serialVersionUID = -295422703255886286L;
+    private static final long serialVersionUID = 1L;
 
+    private String name;
+    private String codeZimmo;
+    private String prix;
+    private String surfaceHabitable;
+    private String ascenseur;
+    private String superficieTerrain;
+    private String meuble;
+    private String extract1;
+    private String piscine;
+    private String anneeConstruction;
+    private String etage;
+    private String nbreEtage;
+    private String nbreFacade;
+    private String garage;
+    private String douche;
+    private String adress;
 
-    public String name;
-    public String code_zimmo;
-    public String Prix;
-    public String Surface_habitable;
-    public String Ascenceur;
-    public String Superficie_du_terrain;
-    public String meuble;
-    public String extract1;
-    public String piscine;
-    public String Annee_de_construction;
-    public String etage;
-    public String nbre_etage;
-    public String nbre_facade;
-    public String Garage;
-    public String douche;
-    public String adress;
-
-    public String getAscenceur() {
-        return Ascenceur;
+    // Getters and Setters
+    public String getName() {
+        return name;
     }
 
-    public void setAscenceur(String ascenceur) {
-        Ascenceur = ascenceur;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Ad{" +
-                "name='" + name + '\'' +
-                ", code_zimmo='" + code_zimmo + '\'' +
-                ", Prix='" + Prix + '\'' +
-                ", Surface_habitable='" + Surface_habitable + '\'' +
-                ", Ascenceur='" + Ascenceur + '\'' +
-                ", Superficie_du_terrain='" + Superficie_du_terrain + '\'' +
-                ", meuble='" + meuble + '\'' +
-                ", extract1='" + extract1 + '\'' +
-                ", piscine='" + piscine + '\'' +
-                ", Annee_de_construction='" + Annee_de_construction + '\'' +
-                ", etage='" + etage + '\'' +
-                ", nbre_etage='" + nbre_etage + '\'' +
-                ", nbre_facade='" + nbre_facade + '\'' +
-                ", Garage='" + Garage + '\'' +
-                ", douche='" + douche + '\'' +
-                ", adress='" + adress + '\'' +
-                '}';
+    public String getCodeZimmo() {
+        return codeZimmo;
     }
 
-    public String getCode_zimmo() {
-        return code_zimmo;
-    }
-
-    public void setCode_zimmo(String code_zimmo) {
-        this.code_zimmo = code_zimmo;
+    public void setCodeZimmo(String codeZimmo) {
+        this.codeZimmo = codeZimmo;
     }
 
     public String getPrix() {
-        return Prix;
+        return prix;
     }
 
     public void setPrix(String prix) {
-        Prix = prix;
+        this.prix = prix;
     }
 
-    public String getSurface_habitable() {
-        return Surface_habitable;
+    public String getSurfaceHabitable() {
+        return surfaceHabitable;
     }
 
-    public void setSurface_habitable(String surface_habitable) {
-        Surface_habitable = surface_habitable;
+    public void setSurfaceHabitable(String surfaceHabitable) {
+        this.surfaceHabitable = surfaceHabitable;
     }
 
-    public String getSuperficie_du_terrain() {
-        return Superficie_du_terrain;
+    public String getAscenseur() {
+        return ascenseur;
     }
 
-    public void setSuperficie_du_terrain(String superficie_du_terrain) {
-        Superficie_du_terrain = superficie_du_terrain;
+    public void setAscenseur(String ascenseur) {
+        this.ascenseur = ascenseur;
+    }
+
+    public String getSuperficieTerrain() {
+        return superficieTerrain;
+    }
+
+    public void setSuperficieTerrain(String superficieTerrain) {
+        this.superficieTerrain = superficieTerrain;
     }
 
     public String getMeuble() {
@@ -110,12 +95,12 @@ public class Ad implements Serializable {
         this.piscine = piscine;
     }
 
-    public String getAnnee_de_construction() {
-        return Annee_de_construction;
+    public String getAnneeConstruction() {
+        return anneeConstruction;
     }
 
-    public void setAnnee_de_construction(String annee_de_construction) {
-        Annee_de_construction = annee_de_construction;
+    public void setAnneeConstruction(String anneeConstruction) {
+        this.anneeConstruction = anneeConstruction;
     }
 
     public String getEtage() {
@@ -126,28 +111,28 @@ public class Ad implements Serializable {
         this.etage = etage;
     }
 
-    public String getNbre_etage() {
-        return nbre_etage;
+    public String getNbreEtage() {
+        return nbreEtage;
     }
 
-    public void setNbre_etage(String nbre_etage) {
-        this.nbre_etage = nbre_etage;
+    public void setNbreEtage(String nbreEtage) {
+        this.nbreEtage = nbreEtage;
     }
 
-    public String getNbre_facade() {
-        return nbre_facade;
+    public String getNbreFacade() {
+        return nbreFacade;
     }
 
-    public void setNbre_facade(String nbre_facade) {
-        this.nbre_facade = nbre_facade;
+    public void setNbreFacade(String nbreFacade) {
+        this.nbreFacade = nbreFacade;
     }
 
     public String getGarage() {
-        return Garage;
+        return garage;
     }
 
     public void setGarage(String garage) {
-        Garage = garage;
+        this.garage = garage;
     }
 
     public String getDouche() {
@@ -166,5 +151,25 @@ public class Ad implements Serializable {
         this.adress = adress;
     }
 
-
+    @Override
+    public String toString() {
+        return "Ad{" +
+                "name='" + name + '\'' +
+                ", codeZimmo='" + codeZimmo + '\'' +
+                ", prix='" + prix + '\'' +
+                ", surfaceHabitable='" + surfaceHabitable + '\'' +
+                ", ascenseur='" + ascenseur + '\'' +
+                ", superficieTerrain='" + superficieTerrain + '\'' +
+                ", meuble='" + meuble + '\'' +
+                ", extract1='" + extract1 + '\'' +
+                ", piscine='" + piscine + '\'' +
+                ", anneeConstruction='" + anneeConstruction + '\'' +
+                ", etage='" + etage + '\'' +
+                ", nbreEtage='" + nbreEtage + '\'' +
+                ", nbreFacade='" + nbreFacade + '\'' +
+                ", garage='" + garage + '\'' +
+                ", douche='" + douche + '\'' +
+                ", adress='" + adress + '\'' +
+                '}';
+    }
 }
