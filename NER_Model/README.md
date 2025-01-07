@@ -1,29 +1,69 @@
-# NER Model Project
+# NER Model Service
 
-This project is focused on training a Named Entity Recognition (NER) model using spaCy. The project includes scripts for data scraping, data preparation, model training, and exposing the trained model via an API for predictions.
+The **NER Model Service** is a specialized backend application designed to perform Named Entity Recognition (NER) on incoming text data. It identifies, classifies, and extracts key entities such as names, dates, locations, and custom-defined entities. Built with a state-of-the-art Spacy machine learning model, this service provides fast and accurate entity recognition while being highly scalable and integrable with other services.
 
+This projects shows how 
 
+## Key Features
+- Collects and prepare data to train the NER Model.
+- Extracts predefined entities from unstructured text, including.
+- Exposed an API to handler requests feom external service.
 
 ## Project Structure
 
 - `project.yml`: Defines the data assets, commands, and workflows for the project.
 - `scripts/`: Contains various scripts for data preparation, conversion, and prediction.
-  - `scraper.py`: Scrapes raw data using ParseHub.
   - `annotate.py`: Annotates raw data.
   - `convert.py`: Converts annotated data to spaCy's binary format.
   - `predict.py`: Provides a function to make predictions using the trained model.
-  - `predict.py`: Exposes the trained model via a Flask API.
+  - `app.py`: Exposes the trained model via a Flask API.
 - `raw_data/`: Contains raw data files.
 - `assets/`: Contains annotated data files.
 - `corpus/`: Contains converted data files in spaCy's binary format.
 - `output/`: Contains the trained model.
 
-## Project workflow
+
+## How to Train the Model
+
+### 1. Data Collection and Cleaning
+- We created a dataset to detect entities like kitchen type, number of bathrooms, and rooms from real estate descriptions.
+- Using the Parsehub scraper, we collected textual descriptions from multiple real estate ads.
+- The scraped data was passed through a cleaning function to remove special characters and new lines.
+- The cleaned data was split: 80% for training and 20% for validation.
+
+### 2. Labeling and Transforming Data
+- spaCy requires training data in the form of a list of tuples, each containing the text and a dictionary with entity indices and labels.
+- The data needs to be labeled and transformed into a format compatible with spaCy.
+
+### 3. Labeling Data
+- The performance of an NER model depends on both the quality and quantity of labeled data.
+- To label the data efficiently, we automated the process using spaCy’s **EntityRuler**:
+  - The **EntityRuler** uses pattern matching and regular expressions to find and label entities.
+  - This allowed us to automatically label a large number of ad descriptions, adding new patterns whenever needed.
+
+### 4. Training the Model
+- After preparing the training and validation data, the model is ready to be trained.
+
 ![Workflow](images/image.png)
 
-## Data Source
 
-The raw data for this project is scraped using [ParseHub](https://www.parsehub.com/), a visual data extraction tool. The `scraper.py` script is used to run the ParseHub scraper and fetch the data, which is then saved into text files for further processing.
+## Architecture
+1. **Text Input Reception**: Receives raw text via API calls.
+2. **NER Model Execution**:
+   - The input text is preprocessed.
+   - The NER model identifies and extracts entities.
+3. **Post-Processing**: Refines and structures the recognized entities for further consumption.
+4. **Response Delivery**: Returns enriched entity data to clients or downstream services.
+
+
+## Technologies
+- **Machine Learning Models**: Leverages models trained using frameworks like Hugging Face or SpaCy for NER.
+
+## Getting Started
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/ner-model-service.git
+
 
 ## Setup
 

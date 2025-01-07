@@ -1,0 +1,351 @@
+General Introduction
+In real estate, undoubtedly even more than in other sectors of the economy, the coronavirus
+crisis has forced professionals to accelerate digitization . However, barely ten years ago, this
+partnership between real estate and digital seemed anything but obvious: the adoption of new
+processes and innovative tools was coming up against a sector known for its inaction.
+But times have changed: Today, technology has become a necessity in everyone’s life , the
+number of mobile device users is increasing day by day and technology is playing a vital role
+in influencing the world’s population. In any business field, developing a business app has
+become essential .For Consequence: in 2021, more than ever, the digitization of real estate is no
+longer an alternative, but an obligation , for customers who need to go and find information
+and advertisements online and for professionals with the aim of developing their activity, or
+simply maintaining it, and continuing to take on mandates.
+this project consists of designing and implementing a business process for mass feeding
+and quality control of a “ real estate advertisements “ database , this database will later be the
+source of information for a mobile application .
+this report is structured into three chapters , the first chapter gives an overview and explains
+the main concepts used in this project . The second chapter defines the functional and nonfunctional
+requirements of the system and illustrates its behavior with the help of some UML
+diagrams . Finally the last chapter enumerates the technologies used, describes the hardware
+and software environments and exhibits the achieved work .
+Summer internship report II2 1
+Chapter 1
+General presentation and preliminary
+study
+In this first chapter we will be presenting the general context of the project , detail the required
+work and explain some crucial concepts and approaches. We will also discuss the different
+features of web scraping softwares to finally choose the convenient tool for this project .
+1.1 General Context
+This sections represents the general context of this project.
+1.1.1 Context of the internship
+This project is part of the summer internship for second year students of the National School
+of Computer Science(ENSI).
+The work is carried out within the company « Future Proof » for a period of 8 weeks and
+supervised by Mr. Younes Regaieg .
+1.1.2 Presentation of the company
+Future Proof S.à.R.L. is a Tunisian company specialized in IT and Digital Transformation services.
+1.1.3 Required work
+The required work is to study, design and implement a business process for mass feeding and
+quality control of a “ real estate advertisements “ database .This database will be the source of
+information to build a bigger real estates web and mobile application.
+Summer internship report II2 2
+Chapitre 1 : General presentation and preliminary study
+1.2 Main Concepts
+In this section , we will introduce and explain the main concepts adopted by project.
+1.2.1 Business Process and BPMN
+1.2.1.1 definition
+A Business Process is a set of tasks with well defined inputs and outputs that will accomplish
+a well defined objective once they are executed in an ordered way . These tasks may be completely
+automated or may require human intervention.
+The Business Process Model and Notation (BPMN) is the industry standard for business
+process modeling. It is provided by the Object Management Group (OMG), supported by many
+vendors and used in many organizations.
+Figure 1.1: bpmn
+1.2.1.2 flowable
+Flowable [1] is an open-source workflow engine written in Java that can execute business processes
+described in BPMN 2.0. We will be using this engine to execute our business process
+.
+Figure 1.2: flowable
+1.2.2 Named Entity Recognition
+The Named Entity recognition is a sub-task of the activity of extracting information from unstructured
+data . It consists of searching for textual objects (that is to say a word, or a group of
+words) called entities which can be categorized into classes such as names of people, names of
+organizations or companies, names of places, quantities, distances , values, dates, etc.
+Summer internship report II2 3
+Chapitre 1 : General presentation and preliminary study
+Figure 1.3: detected entities
+1.2.3 Web Scraping
+1.2.3.1 definition
+Collecting data on the web is sometimes complicated and when possible it is difficult to be
+able to download it or perform a copy and paste. Web scraping is a technique for extracting
+data from a site via a program, automatic software or another site. The objective is therefore to
+extract the content of a page from a site in a structured way. Scraping thus makes it possible to
+reuse this data.
+1.2.3.2 Comparison of Existing Scraping Software
+A web scraper is a tool that helps you quickly extract and turn unstructured data on the web
+into structured formats, like Excel, json ,CSV etc.
+Figure 1.4: scraping softwares [2][3][4]
+Summer internship report II2 4
+Chapitre 1 : General presentation and preliminary study
+There are many different web scraping tools available on the market , some require technical
+backgrounds and some are low / no code tools. For this purpose , we will be comparing three
+scraping softwares to finally pick up the tool that satisfies the most our needs in the project .
+first , we start with features comparison , the following table describes some features of
+three web scraping softwares : Octoparse , Parsehub and Prowebscraper :
+regex HTML
+changes
+captcha data retention test run IP routing
+Octoprase yes no yes no data yes yes
+ProWebScraper yes yes no 15 days no yes
+Parsehub yes no yes (text only) 14 days yes s/pro
+These web scraping tools offer also API’s that will enable us to control everything that can
+be done with their user interfaces like starting a scraping job , downloading scraped data ,
+getting job status etc. . .
+The following table makes the correspondence between each API feature and the plan that
+provides this feature :
+start a job cancel a job get job status download scraped data
+Octoparse pro plan pro plan pro plan standard plan
+ProWebScraper free plan free plan free plan free plan
+Parsehub free plan free plan free plan free plan
+and finally one last table that will describe the comparison of other criterions :
+scalability integration cost data quality configurability documentation community
+Octoparse ++ + + + + +
+Pro Web
+Scraper
++ + - + - –
+Parsehub + + + + ++ +
+based on the previous table , we can see that Parsehub is the best scraping software for
+various reasons :
+• it supports all features
+• powerful API with all features for the free and standard version
+• good quality of data
+• good documentation
+Conclusion
+To sum up , we listed in this chapter some existing web scraping softwares, compared them
+and chose the tool we will use later . We also briefly defined some important concepts to
+understand for this project .
+In the next chapter , we will discuss the analysis and the design parts of the project .
+Summer internship report II2 5
+Chapter 2
+Requirements analysis and application
+Design
+TThis chapter begins the requirements analysis and specification. The functional and nonfunctional
+requirements of the application are first defined, the use case and activity diagram
+are then established to provide a global view of the functional behaviour of the solution
+, and finally the logical and physical architecture of the system are described .
+2.1 Requirements analysis
+2.1.1 Actors
+these are the actors that interacts with our system :
+• Business user :
+– this actor configures the scraper
+– interferes with the processing of the ad whenever he is needed
+• Parsehub agent :
+– scrapes target websites and save data scraped into structured format (json)
+2.1.2 Functional requirements
+• the system should be able to scrape real estate websites
+• the system should process every advertisement by :
+– passing its textual description into a machine learning model to extract properties
+(like number of rooms , kitchen type ... )
+– detecting if the ad already exists in the database , in this case merge the two ads
+– saving the ad in a database
+Summer internship report II2 6
+Chapitre 2 : Requirements analysis and application Design
+2.1.3 Non-Functional requirements
+• scalability : the system needs to be able to add more sites to scrape data from
+• robustness : the system needs to handle a big number of instances as each ad will trigger
+one instance of the pipeline.
+• extensibility : the system should be extensible , for example , we should easily be able to
+add more labels to the NER model (in this context more properties like number of rooms
+, garden surface etc ) to detect them in the textual description .
+2.2 Requirements Specification
+to provide a global view of the functional behaviour of the system , we present next the use
+case and activity diagrams
+2.2.1 Use Case Diagram
+The following is the use case diagram of the system :
+Figure 2.1: Use-Case Diagram
+Summer internship report II2 7
+Chapitre 2 : Requirements analysis and application Design
+2.2.2 Activity Diagram
+Figure 2.2: Activity Diagram
+Summer internship report II2 8
+Chapitre 2 : Requirements analysis and application Design
+2.3 Design
+we will present the logical and physical architectures adopted for our system with the help of
+deployment /component diagram :
+Figure 2.3: deployment /component diagram
+Conclusion
+In this chapter we presented the functional and non-functional requirements that the system is
+called to satisfy, we tried to describe more the system’s functional behaviour with the help of
+UML diagrams ,and finally in the design part , we described the physical and logical architectures
+with a deployment/component diagram .
+Summer internship report II2 9
+Chapter 3
+Realisation
+In this final chapter, we will present the implementation phase . we will start by describing
+the software and hardware environments as well as the different libraries and frameworks
+used.and finally we present some screenshots of the final database .
+3.1 Development Environment
+3.1.1 Hardware Environment
+the properties of the hardware environment are :
+• Machine: ASUS
+• Processor : Intel(R) Core(™) i7-1065G7 CPU @1.30GHZ 1.50GHZ
+• RAM : 8 Go
+3.1.2 Software Environment
+3.1.2.1 Visual Studio Code
+Visual Studio Code[5] is an extensible code editor developed by Microsoft. Its features include
+support for debugging , syntax highlighting , smart code completion, snippets , code refactoring,
+and built-in Git . Users can change the theme . We used vscode to develop, collect data
+and build the model .
+3.1.2.2 Intellij
+[6] IntelliJ IDEA is an Integrated Development Environment (IDE) intended for the development
+of computer software based on Java technology . We used this IDE to develop the two
+spring boot apps .
+3.1.2.3 Postman
+Postman is software that focuses on API testing .It is used to execute HTTP calls directly from a
+graphical interface and It has become very popular for testing Micro services, especially thanks
+to its simplicity and very specialized features.
+Summer internship report II2 10
+Chapitre 3 : Realisation
+3.1.2.4 Google Colab
+Postman is software that focuses on API testing .It is used to execute HTTP calls directly from a
+graphical interface and It has become very popular for testing Micro services, especially thanks
+to its simplicity and very specialized features.
+3.2 Technologies
+3.2.1 Programming Languages
+3.2.1.1 Python
+Python is an interpreted programming language , multi- paradigm and cross-platform ,It has
+strong dynamic typing , automatic memory management by garbage collection and an exception
+management system .
+Python is the most widely used language for Data Science and Machine Learning . The vast
+majority of libraries used for these two data analysis disciplines have Python interfaces. This
+explains why it is so popular as a high level command interface for machine learning libraries
+and other digital algorithms.
+3.2.1.2 Java
+Java is an object-oriented programming language it is the basis of most networked applications
+and is used around the world to develop and deliver mobile and nested applications, games,
+web content, and business software.
+3.2.2 Frameworks , Tools and Predefined Modules
+3.2.2.1 spaCy
+[7]spaCy is a free, open source Python library released under the MIT License for Natural
+Language Processing (NLP). It is written in Cython, and designed for production use with a
+concise and easy to use API.
+For connoisseurs of the Python language, one can consider spaCy as the equivalent of
+numPy for NLP: a low-level library, but intuitive and powerful.
+Thanks to this tool, it is possible to create applications allowing to process and understand
+large volumes of text . It can be used in particular to develop systems for extracting information,
+understanding natural language, or even pre-processing texts for Deep Learning.
+Summer internship report II2 11
+Chapitre 3 : Realisation
+Figure 3.1: spaCy
+3.2.2.2 SpringBoot
+Spring Boot is a JAVA development framework. It is a variation of the classic Spring framework
+which essentially allows the creation of micro services
+Figure 3.2: spring boot
+3.2.2.3 ActiveMq
+Apache ActiveMQ is an open source message broker written in Java with a full Java Message
+Service client. It provides functionalities for businesses, such as to simplify and encourage the
+communication of applications by messages
+Figure 3.3: ActiveMQ
+Summer internship report II2 12
+Chapitre 3 : Realisation
+3.2.3 Achieved Work
+3.2.3.1 advertisements Collection
+• Scraping :
+The first task in this project is to scrape real estate advertisements from different websites.
+For this purpose we chose Parsehub ,a visual web data extraction software to collect these
+ads , the configuration of the scraper is done by the business user .
+• collecting and injecting data to queue :
+As we described previously in this report , Parsehub also offers APIs to control the scraper
+and to download scraped data , to do that ,we developed a spring boot app that connects
+to these APIs , starts the scraping job ,downloads scraped data once ready and finally
+injects it into an ActiveMQ queue.
+3.2.3.2 Advertisements Processing
+On the other side resides another spring-boot Application that uses Flowable as a business
+process engine in its backend . this application contains also a service listening to the ActiveMQ
+queue , once detected a new ad , it will call the flowable engine to start a new process , with
+this new ad as a process variable , this ad will pass through multiple service tasks executed by
+the flowable engine as described :
+• the first service will pass the textual description to the spaCy NER model to detect entities
+(properties of the real estate ad )
+• The second service will look if any similarities are detected between the ad , and the
+already existing ads in the database , another process variable (similaritiesDetected) will
+then be initialised .
+• if any similarities are detected , the ad will be updated , if not , the ad will be added to
+the database.
+3.2.4 Model
+3.2.4.1 Collecting and Cleaning data
+Our named entity recognition model seeks to detect different entities such as kitchen type ,
+number of bathrooms , number of rooms and other properties from a textual description . For
+this we needed to create our own data set .
+we used the Parsehub scraper to collect textual descriptions of multiple real estate ads , then
+we fetch the scraped descriptions and pass them into a function to clean the data :
+this function will remove any special characters and new line objects. Next this data is
+divided as follows : 80 per cent of the scraped descriptions are saved for training and 20 per
+cent saved for validation .
+Summer internship report II2 13
+Chapitre 3 : Realisation
+Figure 3.4: cleaning text function
+3.2.4.2 labeling and transforming data
+spaCy accepts training data as a list of tuples ,each tuple contains the text and a dictionary. The
+dictionary holds the start and end indices , and the label of the named entity in the text, here is
+an example:
+Figure 3.5: training data format
+Now we need to do two things : first label the data , and then transformat into the format
+accepted by the spaCy model .
+3.2.4.3 labeling data
+The success of a NER model does not only depend on the quality of data passed to the model,
+but also on the amount of this data , so a sufficient number of examples is definitely a necessity
+. getting this sufficient number is for sure an exhausting and time-consuming task , that’s why
+we need to automate this process
+• EntityRuler :
+EntityRuler is a spacy ruler matcher that lets you find words you are looking for , it gives
+you also the access to tokens and the relationships between them , which means you get
+access to the surrounding tokens as well , not only this ,but the EntityRuler supports also
+Summer internship report II2 14
+Chapitre 3 : Realisation
+regular expressions . All these features make it possible to create powerful rules to extract
+entities from the text .
+the following is an example of a pattern :
+Figure 3.6: Pattern
+the label here is “NBRE-CHAMBRE” which is the entity type , the "pattern" is the rule that
+the spaCy EntityRuler will follow to extract the corresponding entity In this example , entities
+that can be extracted with this pattern are :” une chambre , deux chambres , deux grandes
+chambres ,etc . . . ” , UPPER case letters are treated as well .
+So using this method , we were able to automatically label a big number of ads descriptions
+. and every time we want our model to start predicting new labels, we just add a new pattern .
+Summer internship report II2 15
+Chapitre 3 : Realisation
+3.2.4.4 Training Model
+Once training and validation data is ready , we’re ready to train our model with a simple
+command , spaCy will start the training process as shown here :
+Figure 3.7: training the model
+• E : number of Epochs
+• : number of optimization steps 1.50GHZ
+• LOSS-NER : the model loss
+• ENTS-F : the precision
+• ENTS-P : the recall
+• ENTS-R : fscore
+Summer internship report II2 16
+Chapitre 3 : Realisation
+3.2.4.5 Results
+here is a screenshot from the database after collecting and processing the ads
+Figure 3.8: database screenshot 1
+Figure 3.9: database screenshot 2
+Summer internship report II2 17
+Chapitre 3 : Realisation
+Figure 3.10: database screenshot 3
+Conclusion
+This final chapter listed the manipulated hardware and software environments, as well as the
+different libraries and frameworks used . It also described the achieved work and demonstrated
+some screenshots from the database .
+Summer internship report II2 18
+Conclusion and Perspectives
+This summer internship is part of the training received by the future engineers at the National
+School of Computer Science . It is Carried out within the company Future-Proof and consists of
+studying, designing and implementing a business process for mass-feeding and quality control
+of a “ real estate advertisements “ database .
+In the first chapter , we started by giving the context of this project and representing the required
+work , we also defined and explained the main concepts adopted by this project and we
+finally presented a theoretical comparison between web scraping softwares.In the second chapter
+we defined the requirements of the project and we demonstrated the logical and physical
+architectures with the help of UML diagrams .Finally in the last chapter we listed the hardware
+and software choices as well as the different libraries and frameworks used , we also described
+the achieved work and some of the results we got .
+we encountered many problems and obstacles during the work . However we could finally
+achieve the required work.
+Several improvements to our project can be added :
+• detecting similarities can be done with the help of IA instead of comparing the ad code
+and URL.
+• human verification can interfere when we get low prediction for similarities , so that no
+corrupted ad enters the database .
+Bibliography
