@@ -4,13 +4,13 @@ Welcome to the **AdVeris**! AdVeris is a system designed to streamline the proce
 
 ## Project Structure
 
-- **Folder 1**: Description of the first component.
+- **DataProcessor**: Description of the Data Processor component.
   - [README.md](./DataProcessor/README.md)
 
-- **Folder 2**: Description of the second component.
+- **Ner_Model**: Description of the AI Model component.
   - [README.md](./NER_Model/README.md)
 
-- **Folder 3**: Description of the third component.
+- **ScraperService**: Description of the Scraper component.
   - [README.md](./ScraperService/README.md)
 
 Each folder contains a dedicated `README.md` file with detailed information about that specific component, its setup, usage, and configuration.
